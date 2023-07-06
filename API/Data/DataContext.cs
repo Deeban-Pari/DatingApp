@@ -9,6 +9,6 @@ namespace API.Data
         {
         }
 
-        public DbSet<AppUser> Users{get;set;} //Table in th DB named Users
+        public DbSet<AppUser> Users { get; set; } //Table in th DB named Users
     }
 }
