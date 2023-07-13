@@ -1,19 +1,26 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="#">Dating App</a>
-    <ul
-      class="navbar-nav me-auto mb-2 mb-md-0"
-      *ngIf="accountService.currentUser$ | async"
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active"
+      >Dating App</a
     >
-      <li class="nav-item">
-        <a class="nav-link" href="#">Matches</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Lists</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">Messages</a>
-      </li>
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <ng-container *ngIf="accountService.currentUser$ | async">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/members" routerLinkActive="active"
+            >Matches</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/lists" routerLinkActive="active"
+            >Lists</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/messages" routerLinkActive="active"
+            >Messages</a
+          >
+        </li>
+      </ng-container>
     </ul>
 
     <!-- <div class="dropdown" *ngIf="loggedIn" dropdown>
@@ -25,9 +32,11 @@
     </div> -->
     <mat-form-field
       style="height: 65px; margin-top: 15px"
-      *ngIf="accountService.currentUser$ | async"
+      *ngIf="accountService.currentUser$ | async as user"
     >
-      <mat-label class="text-decoration-none">Welcome user</mat-label>
+      <mat-label class="text-decoration-none"
+        >Welcome {{ user.username | titlecase }}</mat-label
+      >
       <mat-select class="mb-3">
         <mat-option class="mt-4">Edit Profile</mat-option>
         <mat-option (click)="logout()">Logout</mat-option>
@@ -55,7 +64,7 @@
         type="password"
         placeholder="Password"
       />
-      <button class="btn btn-outline-success" type="login">Login</button>
+      <button class="btn btn-success" type="login">Login</button>
     </form>
   </div>
 </nav>
