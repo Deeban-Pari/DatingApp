@@ -1,5 +1,8 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,29 +12,30 @@ namespace API.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context;
-
         //creating and assigning field context
+        public IUserRepository _userRepository { get; }
+        private readonly IMapper _mapper;
 
-        public UsersController(DataContext context)//instantiating datacontext with context
+        public UsersController(IUserRepository userRepository, IMapper mapper)//instantiating datacontext with context from IUserRepository
         {
-            _context = context;                    //Overall this method called dependency injection
+            _mapper = mapper;
+            _userRepository = userRepository;
+            //Overall this method called dependency injection
         }
 
         //Get all method
-        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() //ActionResult-Helps in getting HTTP responses. IEnumerable-Since we return list so we use IEnumerable
+        public async Task<ActionResult<IEnumerable<MembersDto>>> GetUsers() //ActionResult-Helps in getting HTTP responses. IEnumerable-Since we return list so we use IEnumerable
         {
-            var users = await _context.Users.ToListAsync();
-            return users;
+            var users = await _userRepository.GetMembersAsync();
+            return Ok(users);
         }
 
         //Get indivijual users
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MembersDto>> GetUser(string username)
         {
-            return await _context.Users.FindAsync(id);
+            return await _userRepository.GetMemberAsync(username);
         }
     }
 }
