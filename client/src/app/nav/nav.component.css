@@ -1,0 +1,47 @@
+.profile-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-name {
+  margin-right: 4px;
+  color: #ddd;
+}
+
+.profile-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 5;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.profile-container:hover .dropdown-content {
+  display: block;
+}
